@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="emerald">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@2.14.2/dist/full.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="pokeFinder.css">
+    <title> PokeType </title>
+</head>
+<body>
+    <div class="m-4 md:grid grid-cols-6">
+        <div></div>
+        <div class="md:col-span-4"><img class="flex justify-center w-fit" src="chooseAtype.png"></div>
+        <div></div>
+    </div>
+    <div class="wrapper p-8 flex flex-wrap justify-center">
+        <div class="icon bug" onclick="findType('bug')">
+            <img src="icons/bug.svg"/>
+        </div>
+        <div class="icon dark" onclick="findType('dark')">
+            <img src="icons/dark.svg"/>
+        </div>
+        <div class="icon dragon" onclick="findType('dragon')">
+            <img src="icons/dragon.svg"/>
+        </div>
+        <div class="icon electric" onclick="findType('electric')">
+            <img src="icons/electric.svg"/>
+        </div>
+        <div class="icon fairy" onclick="findType('fairy')">
+            <img src="icons/fairy.svg"/>
+        </div>
+        <div class="icon fighting" onclick="findType('fighting')">
+            <img src="icons/fighting.svg"/>
+        </div>
+        <div class="icon fire" onclick="findType('fire')">
+            <img src="icons/fire.svg"/>
+        </div>
+        <div class="icon flying" onclick="findType('flying')">
+            <img src="icons/flying.svg"/>
+        </div>
+        <div class="icon ghost" onclick="findType('ghost')">
+            <img src="icons/ghost.svg"/>
+        </div>
+        <div class="icon grass" onclick="findType('grass')">
+            <img src="icons/grass.svg"/>
+        </div>
+        <div class="icon ground" onclick="findType('ground')">
+            <img src="icons/ground.svg"/>
+        </div>
+        <div class="icon ice" onclick="findType('ice')">
+            <img src="icons/ice.svg"/>
+        </div>
+        <div class="icon normal" onclick="findType('normal')">
+            <img src="icons/normal.svg"/>
+        </div>
+        <div class="icon poison" onclick="findType('poison')">
+            <img src="icons/poison.svg"/>
+        </div>
+        <div class="icon psychic" onclick="findType('psychic')">
+            <img src="icons/psychic.svg"/>
+        </div>
+        <div class="icon rock" onclick="findType('rock')">
+            <img src="icons/rock.svg"/>
+        </div>
+        <div class="icon steel" onclick="findType('steel')">
+            <img src="icons/steel.svg"/>
+        </div>
+        <div class="icon water" onclick="findType('water')">
+            <img src="icons/water.svg"/>
+        </div>
+    </div>
+    <div id="openList" class="grid grid-cols-1 sm:grid-cols-6"> </div>
+</body>
+    <script>
+        function findType(type) {
+            //Cancella se c'erano elementi prima
+            $("#openList").empty();
+
+            let pokeArray;
+            $.getJSON("https://pokeapi.co/api/v2/type/"+type+"/", function (data) {
+                //contiene tutti i pokemon, con nome e url
+                pokeArray=data.pokemon;
+                //contiene id per vedere se l'id del pokemon va oltre i pokemon che si vogliono mostrare
+                let tempID;
+                let toDelete=new Array();
+                console.log(pokeArray);
+                $.each(pokeArray, function(key,val) {
+                    tempID=val.pokemon.url;
+                    tempID=tempID.substring(34,((val.pokemon.url).length)-1);
+                    if (tempID>890) {
+                        toDelete.push(key);
+                    }
+                });
+                //Cancella nel pokeArray, tanti elementi quanti ne ha toDelete
+                $.each(toDelete, function(key,val) {
+                    pokeArray.pop();
+                });
+                $.each(pokeArray, function(key,val) {
+                    console.log(val.pokemon.name+" - "+key+" - "+val.pokemon.url);
+                    $("#openList").append(`
+                    <div></div>
+                    <div class="stats shadow my-1 sm:col-span-4">
+                        <div class="stat">
+                            <div class="stat-figure text-secondary">
+                                <div class="avatar">
+                                    <div class='image_`+val.pokemon.name+`'> </div>
+                                </div>
+                            </div>
+                            <div class="stat-value pokemon-name"> `+firstUpperCase(val.pokemon.name)+` </div>
+                            <div class="stat-title pokemon-types-`+val.pokemon.name+`"> </div>
+                            <div class="stat-desc pokemon-central-wiki-link"> <a href="https://wiki.pokemoncentral.it/`+val.pokemon.name+`" target="blank" class="text-red-600 italic"> Clicca per aprire la wiki </a> </div>
+                        </div>
+                    </div><div></div>`);
+                });
+                //console.log(pokeArray);
+                $.each(pokeArray, function(key,val) {
+                    $.getJSON("https://pokeapi.co/api/v2/pokemon/"+val.pokemon.name+"/", function (data) {
+                        $(".image_"+val.pokemon.name).replaceWith(`<img class='image_`+val.pokemon.name+`'src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-viii/icons/`+data.id+`.png' style="width:75px">`);
+                        if (data.types[1]) {
+                            $(".pokemon-types-"+val.pokemon.name).replaceWith('<div class="stat-title pokemon-types">'+firstUpperCase(data.types[0].type.name)+'/'+firstUpperCase(data.types[1].type.name)+'</div>');
+                        }
+                        else {
+                            $(".pokemon-types-"+val.pokemon.name).replaceWith('<div class="stat-title pokemon-types">'+firstUpperCase(data.types[0].type.name)+'</div>');
+                        }
+                    });
+                });
+            });   
+        }
+
+        function firstUpperCase(string) {
+            return string[0].toUpperCase() + string.slice(1);
+        }
+    </script>
+</html>
