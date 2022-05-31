@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html id="base" lang="it" data-theme="light">
+<html id="base" lang="it" data-theme="emerald">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -160,12 +160,12 @@
     //Funzione chiamata quando si vuole cambiare tema
     $('#theme').change(function() {
         if (usingWhiteTheme) {
-            $('#base').attr({"data-theme":"dark"});
+            $('#base').attr({"data-theme":"business"});
             $('#title').attr({"src":"img/chooseAtype_white.png"});
             usingWhiteTheme=false;
         }
         else {
-            $('#base').attr({"data-theme":"light"});
+            $('#base').attr({"data-theme":"emerald"});
             $('#title').attr({"src":"img/chooseAtype.png"});
             usingWhiteTheme=true;
         }
