@@ -157,12 +157,20 @@
     $(document).ready(function() {
 
     //set initial state.
-    $('#theme').val(this.checked);
+    val(this.chiaro="Emerald");
+    val(this.scuro="dracula");
+    var current = $('#theme').attr('data-theme');
 
     $('#theme').change(function() {
-           $('#base').attr({"data-theme":"night"})
+
+        if(current==chiaro){
+        $('#base').attr({"data-theme":scuro});
+        }else{ $('#base').attr({"data-theme":chiaro});}
+           
+           
 
     });
+
 
 });
 
