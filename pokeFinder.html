@@ -155,7 +155,14 @@
         }
 
     $(document).ready(function() {
+        $("#title").animate({
+        opacity: "show"}, {
+        duration: "slow",
+        easing: "easein"
+    });
         
+
+
     var usingWhiteTheme=true;
     //Funzione chiamata quando si vuole cambiare tema
     $('#theme').change(function() {
