@@ -157,15 +157,14 @@
     $(document).ready(function() {
 
     //set initial state.
-    var chiaro="Emerald";
-    var scuro="dracula";
-    var current = $('#theme').attr('data-theme');
-    console.log(current);
+    
+    var su=true;
+    
     $('#theme').change(function() {
-
-        if(current==chiaro){
-        $('#base').attr({"data-theme":scuro});
-        }else{ $('#base').attr({"data-theme":chiaro});}
+        if(su){
+        $('#base').attr({"data-theme":"dracula"});
+        su=false;
+        }else{ $('#base').attr({"data-theme":"emerald"});}
     });
 
 
