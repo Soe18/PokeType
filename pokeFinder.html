@@ -125,7 +125,7 @@
                     console.log(val.pokemon.name+" - "+key+" - "+val.pokemon.url);
                     $("#openList").append(`
                     <div></div>
-                    <div class="stats shadow my-1 sm:col-span-4">
+                    <div class="stats shadow my-1 sm:col-span-4" style="display:none;">
                         <div class="stat">
                             <div class="stat-figure text-secondary">
                                 <div class="avatar" style="background:white; border-radius:50%;">
@@ -137,6 +137,7 @@
                             <div class="stat-desc pokemon-central-wiki-link"> <a href="https://wiki.pokemoncentral.it/`+val.pokemon.name+`" target="blank" class="text-accent"> Clicca per aprire la wiki </a> </div>
                         </div>
                     </div><div></div>`);
+                    $(".stats").fadeIn( "slow" );
                 });
                 //console.log(pokeArray);
                 $.each(pokeArray, function(key,val) {
