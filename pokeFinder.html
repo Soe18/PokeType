@@ -95,6 +95,9 @@
     <div id="openList" class="grid grid-cols-1 sm:grid-cols-6"> </div>
 </body>
     <script>
+        //limite dei caratteri di un pokemon
+        const limitChar=12;
+
         function findType(type) {
             //Cancella se c'erano elementi prima
             $("#openList").empty();
@@ -129,7 +132,7 @@
                                     <div class='image_`+val.pokemon.name+`'> </div>
                                 </div>
                             </div>
-                            <div class="stat-value pokemon-name"> `+firstUpperCase(val.pokemon.name)+` </div>
+                            <div class="stat-value pokemon-name"> `+ limitString(firstUpperCase(val.pokemon.name)) +` </div>
                             <div class="stat-title pokemon-types-`+val.pokemon.name+`"> </div>
                             <div class="stat-desc pokemon-central-wiki-link"> <a href="https://wiki.pokemoncentral.it/`+val.pokemon.name+`" target="blank" class="text-accent"> Clicca per aprire la wiki </a> </div>
                         </div>
@@ -152,6 +155,17 @@
 
         function firstUpperCase(string) {
             return string[0].toUpperCase() + string.slice(1);
+        }
+
+        function limitString(string) {
+            let result=string;
+            if (string.length>limitChar) {
+                console.log("limitiamo caratteri");
+                string=string.substring(0,limitChar);
+                string+="...";
+                console.log(string);
+            }
+            return string;
         }
 
     $(document).ready(function() {
