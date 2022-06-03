@@ -186,26 +186,24 @@
             return string;
         }
 
-    $(document).ready(function() {
-        //La classe slowAppear viene data al body intero
-        $(".slowAppear").fadeIn( "slow" );
+        $(document).ready(function() {
+            //La classe slowAppear viene data al body intero
+            $(".slowAppear").fadeIn( "slow" );
 
-        var usingWhiteTheme=true;
-        //Funzione chiamata quando si vuole cambiare tema
-        $('#theme').change(function() {
-            if (usingWhiteTheme) {
-                $('#base').attr({"data-theme":"business"});
-                $('#title').attr({"src":"img/chooseAtype_white.png"});
-                usingWhiteTheme=false;
-            }
-            else {
-                $('#base').attr({"data-theme":"emerald"});
-                $('#title').attr({"src":"img/chooseAtype.png"});
-                usingWhiteTheme=true;
-            }
+            var usingWhiteTheme=true;
+            //Funzione chiamata quando si vuole cambiare tema
+            $('#theme').change(function() {
+                if (usingWhiteTheme) {
+                    $('#base').attr({"data-theme":"business"});
+                    $('#title').attr({"src":"img/chooseAtype_white.png"});
+                    usingWhiteTheme=false;
+                }
+                else {
+                    $('#base').attr({"data-theme":"emerald"});
+                    $('#title').attr({"src":"img/chooseAtype.png"});
+                    usingWhiteTheme=true;
+                }
+            });
         });
-    });
-
-        
     </script>
 </html>
