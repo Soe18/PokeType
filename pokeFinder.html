@@ -11,6 +11,8 @@
     <title> PokeType </title>
 </head>
 <body class="slowAppear" style="display:none">
+    
+    <!-- Navbar -->
     <div class="navbar bg-accent rounded-b-lg text-white shadow-xl" style="position:fixed; top:0; z-index: 1;">
         <div class="flex-1">
             <a href="index.html" class="btn btn-ghost normal-case text-xl">PokeType</a>
@@ -30,12 +32,14 @@
         </div>
     </div>
 
+    <!-- Titolo -->
     <div class="m-4 md:grid grid-cols-3">
         <div></div>
         <div class="mt-24 md:col-span-1"> <img id="title" class="flex justify-center w-fit" src="img/chooseAtype.png"></div>
         <div></div>
     </div>
 
+    <!-- Pulsanti per cercare tipo -->
     <div class="wrapper p-8 flex flex-wrap justify-center">
         <div class="icon bug" onclick="findType('bug')">
             <img src="icons/bug.svg"/>
@@ -97,7 +101,10 @@
     <script>
         //limite dei caratteri di un pokemon
         const limitChar=12;
+        //I pokemon oltre gli 890 sono pokemon speciali non di interesse per l'utente
+        const maxPokemon=890;
 
+        //Funzione chiamata quando premuto il pulsante di un tipo
         function findType(type) {
             //Cancella se c'erano elementi prima
             $("#openList").empty();
@@ -109,18 +116,23 @@
                 //contiene id per vedere se l'id del pokemon va oltre i pokemon che si vogliono mostrare
                 let tempID;
                 let toDelete=new Array();
-                console.log(pokeArray);
+                //console.log(pokeArray);
                 $.each(pokeArray, function(key,val) {
                     tempID=val.pokemon.url;
+                    //ricaviamo l'id del pokemon per capire se non deve essere inserito
                     tempID=tempID.substring(34,((val.pokemon.url).length)-1);
-                    if (tempID>890) {
+                    if (tempID>maxPokemon) {
+                        //mettiamo nell'array di pokemon da cancellare se ha un id troppo alto
                         toDelete.push(key);
                     }
                 });
-                //Cancella nel pokeArray, tanti elementi quanti ne ha toDelete
+
+                //Cancella nel pokeArray tanti elementi quanti ne ha toDelete
                 $.each(toDelete, function(key,val) {
                     pokeArray.pop();
                 });
+
+                //Inseriamo i pokemon nel div, appendendoli a openList
                 $.each(pokeArray, function(key,val) {
                     console.log(val.pokemon.name+" - "+key+" - "+val.pokemon.url);
                     $("#openList").append(`
@@ -140,9 +152,12 @@
                     $(".stats").fadeIn( "slow" );
                 });
                 //console.log(pokeArray);
+
+                //Inseriamo nei div vuoti, l'immagine del pokemon e i suoi tipi
                 $.each(pokeArray, function(key,val) {
                     $.getJSON("https://pokeapi.co/api/v2/pokemon/"+val.pokemon.name+"/", function (data) {
                         $(".image_"+val.pokemon.name).replaceWith(`<img class='image_`+val.pokemon.name+`'src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-viii/icons/`+data.id+`.png' style="width:75px; height:75px">`);
+                        //se data.types[1] esiste, significa che il pokemon ha due tipi
                         if (data.types[1]) {
                             $(".pokemon-types-"+val.pokemon.name).replaceWith('<div class="stat-title pokemon-types">'+firstUpperCase(data.types[0].type.name)+'/'+firstUpperCase(data.types[1].type.name)+'</div>');
                         }
@@ -155,14 +170,16 @@
         }
 
         function firstUpperCase(string) {
+            //rendiamo il primo carattere della stringa maiuscolo e il resto lo lasciamo uguale
             return string[0].toUpperCase() + string.slice(1);
         }
 
         function limitString(string) {
             let result=string;
             if (string.length>limitChar) {
-                console.log("limitiamo caratteri");
+                //console.log("limitiamo caratteri...");
                 string=string.substring(0,limitChar);
+                //facciamo capire all'utente di aver troncato i nomi
                 string+="...";
                 console.log(string);
             }
@@ -170,24 +187,24 @@
         }
 
     $(document).ready(function() {
-        
-    $(".slowAppear").fadeIn( "slow" );
+        //La classe slowAppear viene data al body intero
+        $(".slowAppear").fadeIn( "slow" );
 
-    var usingWhiteTheme=true;
-    //Funzione chiamata quando si vuole cambiare tema
-    $('#theme').change(function() {
-        if (usingWhiteTheme) {
-            $('#base').attr({"data-theme":"business"});
-            $('#title').attr({"src":"img/chooseAtype_white.png"});
-            usingWhiteTheme=false;
-        }
-        else {
-            $('#base').attr({"data-theme":"emerald"});
-            $('#title').attr({"src":"img/chooseAtype.png"});
-            usingWhiteTheme=true;
-        }
+        var usingWhiteTheme=true;
+        //Funzione chiamata quando si vuole cambiare tema
+        $('#theme').change(function() {
+            if (usingWhiteTheme) {
+                $('#base').attr({"data-theme":"business"});
+                $('#title').attr({"src":"img/chooseAtype_white.png"});
+                usingWhiteTheme=false;
+            }
+            else {
+                $('#base').attr({"data-theme":"emerald"});
+                $('#title').attr({"src":"img/chooseAtype.png"});
+                usingWhiteTheme=true;
+            }
+        });
     });
-});
 
         
     </script>
