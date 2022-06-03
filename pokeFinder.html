@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="pokeFinder.css">
     <title> PokeType </title>
 </head>
-<body>
+<body class="slowAppear" style="display:none">
     <div class="navbar bg-accent rounded-b-lg text-white shadow-xl" style="position:fixed; top:0; z-index: 1;">
         <div class="flex-1">
             <a href="index.html" class="btn btn-ghost normal-case text-xl">PokeType</a>
@@ -169,6 +169,8 @@
         }
 
     $(document).ready(function() {
+        
+    $(".slowAppear").fadeIn( "slow" );
 
     var usingWhiteTheme=true;
     //Funzione chiamata quando si vuole cambiare tema
