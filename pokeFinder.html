@@ -176,7 +176,7 @@
 
         function limitString(string) {
             let result=string;
-            if (string.length>limitChar) {
+            if (string.length>limitChar && !($(window).width()>500)) {
                 //console.log("limitiamo caratteri...");
                 string=string.substring(0,limitChar);
                 //facciamo capire all'utente di aver troncato i nomi
