@@ -24,9 +24,9 @@
 
 <body>
     <!--il primo div permette di visualizzare lo sfondo su tutto schermo e di adattarsi alle varie misure dello schermo-->
-    <div class="relative flex min-h-screen flex-col justify-center overflow-hidden bg-[url('img/myproject.png')] py-6 sm:py-12 bg-no-repeat bg-cover">
+    <div class="relative flex min-h-screen flex-col justify-center overflow-hidden bg-[url('img/myproject.png')] py-6 sm:py-12 bg-no-repeat bg-cover fastAppear" style="display:none">
         <!--qua creo il box bianco dove saranno contenuti i vari elemenri-->
-        <div class="absolute inset-0 bg-[url(/img/grid.svg)] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div>
+        <div class="absolute inset-0 bg-[url(/img/grid.svg)] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))] slowAppear" style="display:none"></div>
         <!--un div per contenere il tutto-->
         <div class="relative bg-white px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5 sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10 blur-none">
             <div class="mx-auto max-w-md">
@@ -77,4 +77,13 @@
         </div>
     </div>
 </body>
+    <script>
+        $(document).ready(function() {
+        //tutti gli elementi con classe slowAppear verranno mostrati lentamente
+        $(".slowAppear").fadeIn( "slow" );
+        $(".fastAppear").fadeIn();
+
+        });
+        
+    </script>
 </html>
